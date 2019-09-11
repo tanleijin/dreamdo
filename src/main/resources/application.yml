@@ -1,0 +1,24 @@
+server:
+  port: 80
+
+spring:
+  freemarker:
+    settings:
+      classic_compatible: true #解决前台使用${}赋值值为空的情况
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    #1.useUnicode=true&characterEncoding=utf8 是因为mysql数据库是gbk编码
+    #2.useSSL=true 是否进行SSL连接 SSL协议提供服务主要： 1）认证用户服务器，确保数据发送到正确的服务器； 2）加密数据，防止数据传输途中被窃取使用； 3）维护数据完整性，验证数据在传输过程中是否丢失；
+    #3.autoReconnect=true 8小时内没有进行数据库操作mysql就会自动断开连接,程序再次访问的时候需要重新连接
+    #4.failOverReadOnly=false 自动重连成功后，连接是否设置为只读？
+    #5.rewriteBatchedStatements=true MySQL的JDBC连接的url中要加rewriteBatchedStatements参数，并保证5.1.13以上版本的驱动，才能实现高性能的批量插入
+    url: jdbc:mysql://47.104.6.26:3306/spring-monkey?useUnicode=true&characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false&rewriteBatchedStatements=true
+    username: root
+    password: 123456
+    druid:
+      connection-init-sqls: set names utf8mb4; # 微信呢称和QQ呢称上有很多火星文和emoji表情图片，这些数据，如果直接insert到mysql数据库，一般会报错，设置成utf8都不好使，必须改成utf8mb4编码
+mybatis-plus:
+    typeEnumsPackage: com.tlj.dreamdo.system.enums
+    mapper-locations: classpath:mapper/*.xml
+    global-config:
+      banner: false
